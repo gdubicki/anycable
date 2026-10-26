@@ -581,7 +581,6 @@ func (n *Node) Unsubscribe(s *Session, msg *common.Message) (*common.CommandResu
 		presenceStream = s.env.GetChannelStateField(msg.Identifier, common.PRESENCE_STREAM_STATE)
 
 		s.env.RemoveChannelState(msg.Identifier)
-		s.subscriptions.RemoveChannel(msg.Identifier)
 
 		s.Log.Debug("unsubscribed", "identifier", common.FilteredIdentifier(msg.Identifier))
 	}
@@ -590,6 +589,11 @@ func (n *Node) Unsubscribe(s *Session, msg *common.Message) (*common.CommandResu
 
 	if res != nil {
 		n.handleCommandReply(s, msg, res)
+	}
+
+	// Only now: StopAllStreams (in handleCommandReply) releases the streams it finds in the channel's subscriptions.
+	if err == nil {
+		s.subscriptions.RemoveChannel(msg.Identifier)
 	}
 
 	if s.IsResumeable() {

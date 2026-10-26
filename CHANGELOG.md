@@ -2,6 +2,10 @@
 
 ## master
 
+- Fix leaking pub/sub subscriptions when a client unsubscribes from a channel. ([@gdubicki][])
+
+  The channel was removed from the session before its streams were stopped, so they were never unsubscribed from the broker and pub/sub.
+
 ## 1.6.20 (2026-10-21)
 
 - Upgrade to Go tool chain 1.27.3 (fix eMuhdra CVE).
@@ -564,3 +568,4 @@ See [Changelog](https://github.com/anycable/anycable-go/blob/0-6-stable/CHANGELO
 [@ardecvz]: https://github.com/ardecvz
 [@paderinandrey]: https://github.com/paderinandrey
 [@budnik]: https://github.com/budnik
+[@gdubicki]: https://github.com/gdubicki
