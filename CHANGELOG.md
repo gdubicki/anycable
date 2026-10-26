@@ -2,6 +2,10 @@
 
 ## master
 
+- Fix HTTP RPC opening a new connection for almost every call. ([@gdubicki][])
+
+  The HTTP RPC client now keeps up to `--rpc_concurrency` idle connections to the RPC server, instead of Go's default of two per host.
+
 ## 1.6.20 (2026-10-21)
 
 - Upgrade to Go tool chain 1.27.3 (fix eMuhdra CVE).
@@ -564,3 +568,4 @@ See [Changelog](https://github.com/anycable/anycable-go/blob/0-6-stable/CHANGELO
 [@ardecvz]: https://github.com/ardecvz
 [@paderinandrey]: https://github.com/paderinandrey
 [@budnik]: https://github.com/budnik
+[@gdubicki]: https://github.com/gdubicki
